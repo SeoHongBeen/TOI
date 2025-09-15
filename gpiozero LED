@@ -1,0 +1,13 @@
+//gpiozero LED 깜빡이 예제 -> 트랙상 09.17 - 09.24에 할 예정
+필요 부품: LED, 저항, 점퍼선 → 라즈베리파이 GPIO 핀에 꽂아야 함.
+
+from gpiozero import LED
+from time import sleep
+
+led = LED(17)
+while True:
+    led.on()
+    sleep(1)
+    led.off()
+    sleep(1)
+
