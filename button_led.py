@@ -1,15 +1,22 @@
 import board
 import digitalio
+import time
 
-# LED를 GP15 핀에 연결 → 출력 모드로 설정
+# LED: GP15
 led = digitalio.DigitalInOut(board.GP15)
 led.direction = digitalio.Direction.OUTPUT
 
-# 버튼을 GP14 핀에 연결 → 입력 모드로 설정
+# 버튼: GP14 (풀다운)
 button = digitalio.DigitalInOut(board.GP14)
 button.direction = digitalio.Direction.INPUT
-button.pull = digitalio.Pull.DOWN   # 풀다운 적용 (기본값 0)
+button.pull = digitalio.Pull.DOWN
 
-# 무한 루프: 버튼 값 = LED 값
 while True:
-    led.value = button.value
+    if button.value:   # 버튼 눌렸을 때 (HIGH)
+        led.value = True
+        print("Button Pressed! → LED ON")
+    else:              # 버튼 안 눌렸을 때 (LOW)
+        led.value = False
+        print("Button Released → LED OFF")
+    
+    time.sleep(0.2)  # 너무 빠른 출력 방지
