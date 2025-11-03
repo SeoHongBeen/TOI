@@ -1,7 +1,7 @@
 import cv2
 
 # 이미지 파일 이름 (같은 폴더 안에 있어야 함)
-IMG_PATH = "jang.jpeg"
+IMG_PATH = "/home/kimnayeon/Pictures/22.png"
 
 img = cv2.imread(IMG_PATH)
 if img is None:
