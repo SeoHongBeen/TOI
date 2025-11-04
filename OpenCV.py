@@ -1,31 +1,25 @@
+### 사진 캡처
 import cv2
 
-# 이미지 파일 이름 (같은 폴더 안에 있어야 함)
-IMG_PATH = "/home/kimnayeon/Pictures/22.png"
+# 카메라 객체 생성
+cap = cv2.VideoCapture(0)
 
-img = cv2.imread(IMG_PATH)
-if img is None:
-    raise SystemExit("이미지를 불러올 수 없습니다. sample.jpg 파일이 같은 폴더에 있는지 확인하세요.")
+if not cap.isOpened():
+    raise SystemExit("카메라를 열 수 없습니다.")
 
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-cv2.imwrite("gray_result.jpg", gray)
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
 
+    cv2.imshow("Camera", frame)
 
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-faces = face_cascade.detectMultiScale(gray, 1.2, 5, minSize=(60, 60))
-face_img = img.copy()
-for (x, y, w, h) in faces:
-    cv2.rectangle(face_img, (x, y), (x+w, y+h), (0, 255, 0), 2)
-cv2.imwrite("face_detect_result.jpg", face_img)
+    key = cv2.waitKey(1)
+    if key == ord('c'):  # 'c' 키로 사진 저장
+        cv2.imwrite("capture.jpg", frame)
+        print("사진 저장 완료!")
+    elif key == ord('q'):  # 'q' 키로 종료
+        break
 
-blur = cv2.GaussianBlur(gray, (5, 5), 1.2)
-edges = cv2.Canny(blur, 80, 160)
-cnts, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-contour_img = img.copy()
-cv2.drawContours(contour_img, cnts, -1, (0, 255, 0), 2)
-cv2.imwrite("contour_result.jpg", contour_img)
-
-print("결과 저장 완료:")
-print("- gray_result.jpg")
-print("- face_detect_result.jpg")
-print("- contour_result.jpg")
+cap.release()
+cv2.destroyAllWindows()
