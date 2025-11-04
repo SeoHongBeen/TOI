@@ -1,3 +1,4 @@
+### 얼굴 감지 및 사각형 그리기 
 import cv2
 
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
