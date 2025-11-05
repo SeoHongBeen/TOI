@@ -1,13 +1,14 @@
 import cv2
 
-face_cascade = cv2.CascadeClassifier("/usr/share/opencv4/haarcascades/haarcascade_frontalface_default.xml")
+# OpenCV 내장 haarcascade 경로 사용 (직접 지정 안 해도 됨)
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
 cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
 if not cap.isOpened():
-    raise SystemExit("카메라 열기 실패")
+    raise SystemExit("카메라를 열 수 없습니다.")
 
 while True:
     ret, frame = cap.read()
